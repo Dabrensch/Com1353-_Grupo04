@@ -83,9 +83,6 @@ BEGIN
     );
 
 
-    -- Mostrar los resultados de la operación
-    --SELECT * FROM dbSucursal.Sucursal;
-
 
 	DROP TABLE #DatosSucursalArchivo;
 	
@@ -783,7 +780,7 @@ BEGIN
 			-- Verificar que los valores se asignaron correctamente
 			IF @ProductosElectronica IS NULL OR @ProductosCatalogo IS NULL OR @ProductosImportados IS NULL
 			BEGIN
-				RAISERROR('No se pudieron extraer correctamente los valores del Excel. chauuuuuuuuuuuuuuuuuuu', 16, 1)
+				RAISERROR('No se pudieron extraer correctamente los valores del Excel. ', 16, 1)
 				RETURN;
 			END
 

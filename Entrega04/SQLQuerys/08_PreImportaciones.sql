@@ -56,7 +56,6 @@ BEGIN
 	EXEC sp_OADestroy @Object;
 
 	SET @Genero = JSON_VALUE(@ResponseText, '$.gender');
-
 	RETURN CASE 
 		WHEN @Genero = 'male' THEN '20'
 		WHEN @Genero = 'female' THEN '27'
@@ -124,7 +123,8 @@ BEGIN
 
         -- Crear un objeto COM para la solicitud HTTP
         EXEC sp_OACreate 'MSXML2.ServerXMLHTTP.6.0', @Object OUT;
-        IF @Object = 0 RAISERROR('No se pudo establecer una conexión HTTP', 10, 1);
+        IF @Object = 0 
+			RAISERROR('No se pudo establecer una conexión HTTP', 10, 1);
 
         -- Realizar la solicitud GET a la API
         EXEC sp_OAMethod @Object, 'open', NULL, 'GET', @URL, 'false';

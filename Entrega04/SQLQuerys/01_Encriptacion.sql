@@ -13,8 +13,6 @@
 USE Com1353G04
 GO
 ---------------------------------------------------------------------
-
----------------------------------------------------------------------
 -- Crear una llave maestra, certificado y llave simetrica para encriptar la tabla dbEmpleado.Empleado
 
 

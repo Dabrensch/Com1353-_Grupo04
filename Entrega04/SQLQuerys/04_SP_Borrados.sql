@@ -140,8 +140,8 @@ BEGIN
 	END
 
 	-- Abrir la llave simétrica
-		OPEN SYMMETRIC KEY EmpleadoLlave
-			DECRYPTION BY CERTIFICATE CertificadoEmpleado;
+	OPEN SYMMETRIC KEY EmpleadoLlave
+		DECRYPTION BY CERTIFICATE CertificadoEmpleado;
 
 	-- Inactivar empleado
     UPDATE Empleado.Empleado
@@ -149,7 +149,7 @@ BEGIN
     WHERE legajoEmpleado = @legajoEmpleado;
 
 	-- Cerrar la llave simétrica
-		CLOSE SYMMETRIC KEY EmpleadoLlave;
+	CLOSE SYMMETRIC KEY EmpleadoLlave;
 END
 GO
 
@@ -169,9 +169,21 @@ BEGIN
 		RETURN;  
 	END
 
+	IF @idSucursalNueva IS NOT NULL AND @idSucursal = @idSucursalNueva
+	BEGIN
+		RAISERROR('La sucursal nueva no puede ser la sucursal que desea borrar.', 16, 1)  
+		RETURN;  
+	END
+
 	IF @idSucursalNueva IS NOT NULL AND NOT EXISTS (SELECT 1 FROM Sucursal.Sucursal WHERE idSucursal = @idSucursalNueva)
 	BEGIN
 		RAISERROR('No existe una sucursal nueva con el ID especificado.', 16, 1)  
+		RETURN;  
+	END
+	
+	IF @idSucursalNueva IS NOT NULL AND (SELECT estado FROM Sucursal.Sucursal WHERE idSucursal = @idSucursalNueva) = 0
+	BEGIN
+		RAISERROR('La sucursal nueva esta inactiva.', 16, 1)  
 		RETURN;  
 	END
 

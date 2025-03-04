@@ -48,13 +48,16 @@ SET @DirectorioProductos =
         ELSE @DirectorioProductos + '/' 
     END;
 
-
+/*
 EXEC Sucursal.ImportarSucursales @RutaInformacion;
 EXEC Venta.ImportarMetodosDePago @RutaInformacion;
 EXEC Empleado.ImportarEmpleados @RutaInformacion;
 EXEC Producto.ImportarClasificacionProductos @RutaInformacion;
 EXEC Producto.ImportarProductos @RutaInformacion, @DirectorioProductos;
 EXEC Venta.ImportarVentas @RutaVentas;
+*/
+
+EXEC Sistema.ImportarArchivoa @RutaInformacion, @RutaVentas, @DirectorioProductos;
 
 
 -- Mostrar resultados

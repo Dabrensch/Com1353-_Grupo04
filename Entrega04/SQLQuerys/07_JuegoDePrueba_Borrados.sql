@@ -86,7 +86,7 @@ EXEC dbEmpleado.BorrarEmpleado 99;
 -- Se des asignan a los empleados de esa sucursal, para que los puedan re ubicar en un futuro, o se asignan a una sucursal diferente al momento del borrado
 -- El parametro @idSucursalNueva no es obligatorio, por lo tanto, si no se manda ese parametros los empleados quedaran sin sucursal asignada
 
--- Prueba 1: Borrar una sucursal existente.
+-- Prueba 1: Borrar una sucursal existente y asignar nueva sucursal.
 -- Inicial: estadoSucursal = 1 ; idSucursalDeEmpleado = 2
 -- Esperado: estadoSucursal = 0 ; idSucursalDeEmpleado = 1
 SELECT S.idSucursal, S.estado AS estadoSucursal, E.legajoEmpleado, E.idSucursal AS idSucursalDeEmpleado FROM Sucursal.Sucursal S JOIN Empleado.Empleado E ON S.idSucursal = E.idSucursal WHERE S.idSucursal = 2
@@ -102,6 +102,24 @@ EXEC Sucursal.BorrarSucursal 99;
 -- Prueba 3: Asignar una sucursal no existente.
 -- Esperado: Error: "No existe una sucursal nueva con el ID especificado."
 EXEC Sucursal.BorrarSucursal 1, 99;
+
+-- Prueba 4: Asignar sucursal nueva igual a la borrada.
+-- Esperado: Error: "La sucursal nueva no puede ser la sucursal que desea borrar."
+EXEC Sucursal.BorrarSucursal 1, 1;
+
+-- Prueba 5: Asignar sucursal nueva inactiva.
+-- Esperado: Error: "La sucursal nueva esta inactiva."
+EXEC Sucursal.BorrarSucursal 1, 2;
+
+-- Prueba 6: Borrar una sucursal existente, sin asignar nueva sucursal.
+-- Inicial: estadoSucursal = 1 ; idSucursalDeEmpleado = 1
+-- Esperado: estadoSucursal = 0 ; idSucursalDeEmpleado = NULL
+SELECT S.idSucursal, S.estado AS estadoSucursal, E.legajoEmpleado, E.idSucursal AS idSucursalDeEmpleado FROM Sucursal.Sucursal S JOIN Empleado.Empleado E ON S.idSucursal = E.idSucursal WHERE S.idSucursal = 1
+EXEC Sucursal.BorrarSucursal 1;
+SELECT idSucursal, estado AS estadoSucursal FROM Sucursal.Sucursal WHERE idSucursal = 1
+EXEC Empleado.ObtenerEmpleado 1
+EXEC Empleado.ObtenerEmpleado 2
+EXEC Empleado.ObtenerEmpleado 3
 
 
 ---------------------------------------------------------------------

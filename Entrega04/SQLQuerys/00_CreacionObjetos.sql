@@ -7,7 +7,7 @@
    -- Schereik, Brenda 45128557
 
 ---------------------------------------------------------------------
--- Consigna: Cree la base de datos, entidades y relaciones. Incluya restricciones y claves.
+-- Consigna: Cree la base de datos, entidades y relaciones. 
 
 ---------------------------------------------------------------------
 -- Crear base de datos si no existe
